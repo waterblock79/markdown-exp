@@ -12,6 +12,7 @@ export const i18n = createI18n({
             is: "is a clean, powerful, open-source converter that transforms your Markdown into print-quality PDFs.",
             gfmSupport: "- GitHub Flavored Markdown (GFM) support",
             seamlessLocalAssetIntegration: "- Seamless local asset integration",
+            loadFromGithubRepo: "- Load files from GitHub repository",
             highQualityDocumentRendering: "- High-quality document rendering",
             tryItOut: "Try it out",
             starUsOnGitHub: "Star us on GitHub",
@@ -48,6 +49,10 @@ export const i18n = createI18n({
             iosInstructions: "Tap the <b>Share</b> icon in the top-right to save as PDF.",
             starUs: "If you find this project useful, please consider giving it a star on GitHub."
          },
+         styleEditor: {
+            presets: "Presets",
+            allowUnsafe: "Allow unsafe content"
+         },
          messages: {
             directoryNotExists: "Directory {dict} not exists.",
             failedToFetchTree: "Failed to fetch tree: {message}",
@@ -59,6 +64,7 @@ export const i18n = createI18n({
             is: "是一个简洁、强大、开源的 Markdown to PDF 转换器。",
             gfmSupport: "- 支持 GitHub Flavored Markdown (GFM)",
             seamlessLocalAssetIntegration: "- 无缝的本地资源集成",
+            loadFromGithubRepo: "- 从 GitHub 仓库载入文件",
             highQualityDocumentRendering: "- 打印质量的文档渲染",
             tryItOut: "试一试",
             starUsOnGitHub: "在 GitHub 上 Star 我们",
@@ -93,6 +99,10 @@ export const i18n = createI18n({
             androidInstructions: "请选择 <b>另存为 PDF</b>。",
             iosInstructions: "点击右上角的 <b>分享</b> 图标保存为 PDF。",
             starUs: "如果您喜欢这个项目的话，欢迎在 GitHub 上 Star 我们！"
+         },
+         styleEditor: {
+            presets: "预设",
+            allowUnsafe: "允许不安全的内容"
          },
          messages: {
             directoryNotExists: "目录 {dict} 不存在。",

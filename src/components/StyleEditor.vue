@@ -2,7 +2,7 @@
    <div class="pa-2 h-100 d-flex flex-column">
       <v-select
          class="flex-grow-0"
-         label="Presets"
+         :label="t('styleEditor.presets')"
          :items="Object.keys(presetStyles)"
          variant="outlined"
          v-model="styling.preset"
@@ -23,8 +23,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
 import { presetStyles, useStyling } from "../stores/styling";
 import MarkdownPreview from "./MarkdownPreview.vue";
 
 const styling = useStyling();
+const { t } = useI18n();
 </script>

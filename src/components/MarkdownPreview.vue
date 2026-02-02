@@ -22,6 +22,7 @@ import { full as markdownItEmoji } from "markdown-it-emoji";
 import morphdom from "morphdom";
 import mermaid from "mermaid";
 import { ref, watch, onMounted, toRaw, nextTick } from "vue";
+import DOMPurify from "dompurify";
 import {
    FileSystemFile,
    RemoteFileHandle,
@@ -106,46 +107,32 @@ const renderDocument = () => {
          if (!match || !match[1]) return content;
 
          const yamlRaw = match[1];
-         const lines = yamlRaw
-            .split(/\r?\n/)
-            .filter((line) => line.trim() !== "");
 
-         const keys = [] as string[];
-         const values = [] as string[];
-
-         lines.forEach((line) => {
-            const colonIndex = line.indexOf(":");
-            if (colonIndex !== -1) {
-               const key = line.slice(0, colonIndex).trim();
-               const value = line.slice(colonIndex + 1).trim();
-               keys.push(key);
-               values.push(value);
-            }
-         });
-
-         if (keys.length === 0) return content;
-         const header = `| ${keys.join(" | ")} |`;
-         const divider = `| ${keys.map(() => "---").join(" | ")} |`;
-         const row = `| ${values.join(" | ")} |`;
-
-         return content.replace(yamlRegex, `${header}\n${divider}\n${row}\n\n`);
+         return content.replace(yamlRegex, `<pre class="yaml-metadata">${yamlRaw}</pre>\n`);
       };
 
+      let html = raw.value || "";
+      html = resolveYAMLMetadata(html);
+      html = MarkdownIt.render(html);
+      html = DOMPurify.sanitize(html);
       morphdom(
          previewer.value?.querySelector(".markdown-body")!,
-         `<div class="markdown-body">${MarkdownIt.render(resolveYAMLMetadata(raw.value || ""))}</div>`,
+         `<div class="markdown-body">${html}</div>`,
          {
             childrenOnly: true,
          },
       );
+      console.log(html);
 
       await nextTick();
 
-      previewer.value?.querySelectorAll('p:has(> img:only-child)').forEach(el => {
-         if (!(el as HTMLParagraphElement).innerText.length) {
-            el.classList.add('image-only');
-         }
-      })
+      previewer.value
+         ?.querySelectorAll("p:has(> img:only-child)")
+         .forEach((el) => {
+            if (!(el as HTMLParagraphElement).innerText.length) {
+               el.classList.add("image-only");
+            }
+         });
 
       await mermaid.run({
          querySelector: ".language-mermaid",

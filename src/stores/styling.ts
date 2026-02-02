@@ -10,6 +10,8 @@ const githubStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs/gith
    font-style: normal;
 }
 
+.markdown-body > pre.yaml-metadata { display: none; }
+
 .markdown-body pre,
 .markdown-body code {
    font-family: "JetBrains Mono", "Noto Sans SC", monospace !important;

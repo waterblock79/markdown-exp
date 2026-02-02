@@ -12,6 +12,7 @@ Markdown <b>Exp</b> is a clean, powerful, open-source converter that transforms 
 
 - 📄 GitHub Flavored Markdown (GFM) support
 - 📁 Seamless local asset integration
+- 📝 Load files from GitHub repository
 - 🖨️ Print-quality document rendering
 - 🌐 A clean, instant, no-download experience
 

@@ -21,6 +21,7 @@
             </div>
             <div class="text-subtitle-2 font-monospace my-4">
                {{ $t("starting.gfmSupport") }}<br />
+               {{ $t("starting.loadFromGithubRepo") }}<br />
                {{ $t("starting.seamlessLocalAssetIntegration") }}<br />
                {{ $t("starting.highQualityDocumentRendering") }}<br />
                <a
@@ -101,6 +102,11 @@
                      @click="openRepoDialog = false"
                   ></v-btn>
                   <v-btn
+                     :text="$t('starting.tryItOut')"
+                     color="secondary"
+                     @click="tryItOut"
+                  ></v-btn>
+                  <v-btn
                      :text="$t('repo.open')"
                      :loading="openRepoInfo.loading"
                      @click="openRepo"
@@ -168,7 +174,7 @@
                color="primary"
                @click="
                   translationReversed = false;
-                  exportSettings.title = preview?.name || '';
+                  exportSettings.title = preview?.name.replace(/\.md$/g, '') || '';
                   exportSettings.is = true;
                "
             >
@@ -192,7 +198,7 @@
                   density="comfortable"
                   v-model="exportSettings.title"
                ></v-text-field>
-               <v-dialog height="75%">
+               <v-dialog height="75%" max-height="90%">
                   <template v-slot:activator="{ props: activatorProps }">
                      <v-btn
                         variant="outlined"
@@ -281,7 +287,7 @@
                >
                   {{ $t("exportSettings.print") }}
                </v-btn>
-               <div class="text-center text-subtitle-2">
+               <div class="text-center text-subtitle-2" v-if="exportSettings.starUsIfYouLikeIt">
                   <a
                      class="text-indigo text-decoration-none font-weight-medium cursor-pointer"
                      href="//github.com/waterblock79/markdown-exp"
@@ -590,6 +596,7 @@ const exportSettings = reactive({
    is: false,
    title: "",
    customStyle: "",
+   starUsIfYouLikeIt: false
 });
 
 const printDocument = async () => {
@@ -597,6 +604,7 @@ const printDocument = async () => {
    document.title = exportSettings.title;
    await fullscreenPreview.display(preview.value);
    document.title = "Markdown Exp";
+   exportSettings.starUsIfYouLikeIt = true;
 };
 
 const platform = computed(() => {
@@ -689,6 +697,7 @@ const platform = computed(() => {
 
 .export-preview {
    max-height: 100%;
+   max-width: 50%;
    aspect-ratio: 1 / 1.414;
 }
 
