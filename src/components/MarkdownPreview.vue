@@ -122,7 +122,6 @@ const renderDocument = () => {
             childrenOnly: true,
          },
       );
-      console.log(html);
 
       await nextTick();
 

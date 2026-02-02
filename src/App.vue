@@ -75,11 +75,15 @@ body::-webkit-scrollbar {
 
 @media print {
    .fullscreen-preview-back {
-      display: none;
+      display: none !important;
       opacity: 0;
    }
    #fullscreen-preview {
-      display: block;
+      display: block !important;
+      z-index: 10000;
+   }
+   .v-application {
+      display: none !important;
    }
    ::-webkit-scrollbar {
       display: none;

@@ -104,6 +104,7 @@
                   <v-btn
                      :text="$t('starting.tryItOut')"
                      color="secondary"
+                     :disabled="openRepoInfo.loading"
                      @click="tryItOut"
                   ></v-btn>
                   <v-btn
@@ -538,6 +539,7 @@ const openRepo = () => {
                   );
                } else {
                   fileSystemRoot.items = dict.items;
+                  fileSystemRoot.parent = dict.parent;
                }
                openRepoInfo.loading = false;
             } else {

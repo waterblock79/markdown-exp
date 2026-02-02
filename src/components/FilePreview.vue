@@ -75,7 +75,10 @@
 <script lang="ts" setup>
 import { watch, ref, computed } from "vue";
 import MarkdownPreview from "./MarkdownPreview.vue";
-import type { FileSystemFile, RemoteFileHandle } from "../utils/FileSystemTypes";
+import {
+   RemoteFileHandle,
+   type FileSystemFile,
+} from "../utils/FileSystemTypes";
 import hljs from "highlight.js";
 
 const loading = ref(false);
@@ -113,22 +116,24 @@ const updateFilePreview = async () => {
       if (/\.(md|markdown|txt)$/.test(file.name)) {
          type.value = "markdown";
          value.value = await file.text();
-      } else if (
-         /\.(jpe?g|png|gif|bmp|webp|svg?)$/.test(file.name) ||
-         file.type.startsWith("image")
-      ) {
-         type.value = "image";
-         value.value = URL.createObjectURL(file);
-      } else if (
-         file.type.startsWith("text") ||
-         file.type.startsWith("video") ||
-         file.type === "application/pdf"
-      ) {
-         type.value = "embed";
-         value.value = URL.createObjectURL(file);
       } else {
-         type.value = "unavailable";
-         value.value = URL.createObjectURL(file);
+         if (
+            /\.(jpe?g|png|gif|bmp|webp|svg?)$/.test(file.name) ||
+            file.type.startsWith("image")
+         ) {
+            type.value = "image";
+         } else if (
+            file.type.startsWith("text") ||
+            file.type.startsWith("video") ||
+            file.type === "application/pdf"
+         ) {
+            type.value = "embed";
+         } else {
+            type.value = "unavailable";
+         }
+         if (fsFile.value.handle instanceof RemoteFileHandle) {
+            value.value = fsFile.value.handle.url;
+         } else value.value = URL.createObjectURL(file);
       }
    }
 };
