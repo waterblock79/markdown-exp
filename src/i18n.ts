@@ -14,6 +14,7 @@ export const i18n = createI18n({
             seamlessLocalAssetIntegration: "- Seamless local asset integration",
             loadFromGithubRepo: "- Load files from GitHub repository",
             highQualityDocumentRendering: "- High-quality document rendering",
+            customStylesAndThemes: "- Custom styles & themes",
             tryItOut: "Try it out",
             starUsOnGitHub: "Star us on GitHub",
             startingPoint: "Choose your starting point...",
@@ -51,7 +52,15 @@ export const i18n = createI18n({
          },
          styleEditor: {
             presets: "Presets",
-            allowUnsafe: "Allow unsafe content"
+            allowUnsafe: "Allow unsafe content",
+            options: "Options",
+            hideMeta: "Hide metadata",
+            singleImageLabel: "Single line image",
+            singleImage: {
+               default: 'Default' ,
+               center: 'Center',
+               center_alt: 'Center image with alt text below'
+            }
          },
          messages: {
             directoryNotExists: "Directory {dict} not exists.",
@@ -66,6 +75,7 @@ export const i18n = createI18n({
             seamlessLocalAssetIntegration: "- 无缝的本地资源集成",
             loadFromGithubRepo: "- 从 GitHub 仓库载入文件",
             highQualityDocumentRendering: "- 打印质量的文档渲染",
+            customStylesAndThemes: "- 自定义样式和主题",
             tryItOut: "试一试",
             starUsOnGitHub: "在 GitHub 上 Star 我们",
             startingPoint: "让我们从哪里开始？",
@@ -102,7 +112,15 @@ export const i18n = createI18n({
          },
          styleEditor: {
             presets: "预设",
-            allowUnsafe: "允许不安全的内容"
+            allowUnsafe: "允许不安全的内容",
+            options: "选项",
+            hideMeta: "隐藏元数据",
+            singleImageLabel: "单行图片",
+            singleImage: {
+               default: '默认' ,
+               center: '居中',
+               center_alt: '居中，在下方显示描述文本'
+            }
          },
          messages: {
             directoryNotExists: "目录 {dict} 不存在。",
