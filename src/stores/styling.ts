@@ -27,6 +27,10 @@ const githubStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs/gith
    overflow: auto;
 }
 
+.markdown-body .katex-display {
+   margin: 0.5em 0;
+}
+
 .markdown-body sup.footnote-ref a {
    text-decoration: none !important;
    margin-left: 0.1em !important;
@@ -91,132 +95,228 @@ const githubStylePreview = `## Example Markdown Document
 With **Markdown**, you can create complex formatting for your documents using a simple, readable syntax. For instance, we can use \`**bold text**\` to create **bold text**.
 `;
 
-const gaokaoStyleCSS = `/* This styling is consistent with the conventions of China's National College Entrance Examination (Gaokao). */
-/*
-## 2025 年普通高等学校招生全国统一考试
-# 数学
-
-###   本试卷共 12 页，150 分。考试时长 120 分钟。考生务必将答案写在答题卡上，在试卷上作答无效。考试结束后，将本试卷和答题卡一并交回。
-
-## 第一部分
-
-### 一、选择题共 10 小题，每小题 4 分，共 40 分。在每小题列出的四个选项中，选出符合题目要求的一项。
-
-1. 设集合 $M = \\{x \\mid 2x - 1 > 5\\}$，集合 $N = \\{1, 2, 3\\}$，则 $M \\cap N = $ （ ）    
-<selections>
-  $\\text{A. } \\{1, 2, 3\\}$
-  $\\text{B. } \\{2, 3\\}$
-  $\\text{C. } \\{3\\}$
-  $\\text{D. } \\varnothing$
-</selections>  
-*/
+const publicationStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Noto+Serif+SC:wght@400;500;700&display=swap");
 
 .markdown-body {
-   font-family: "Times New Roman", "宋体";
-   line-height: 2em;
+   font-family: "Source Serif 4", "Noto Serif SC", Georgia, "Songti SC", serif;
+   font-size: 17px;
+   line-height: 1.85;
+   color: #20201e;
+   max-width: 44em;
+   margin: 0 auto;
+   text-rendering: optimizeLegibility;
+   font-optical-sizing: auto;
+   letter-spacing: 0.01em;
+   word-wrap: break-word;
+}
+
+.markdown-body > *:first-child { margin-top: 0 !important; }
+.markdown-body > *:last-child { margin-bottom: 0 !important; }
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+   margin-top: 1.8em;
+   margin-bottom: 0.9em;
+   font-weight: 600;
+   line-height: 1.3;
+   text-indent: 0;
+   color: #1a1a18;
+   border: none !important;
 }
 .markdown-body h1 {
+   font-size: 1.9em;
    text-align: center;
-   font-family: "黑体";
-   letter-spacing: 1em;
-   text-indent: 1em;
-   font-size: 2rem;
-   line-height: 2em;
-   font-weight: 600;
-   border: none;
-   margin: 0;
-   padding: 0;
+   letter-spacing: 0.06em;
+   font-weight: 700;
+   margin-top: 0;
+   margin-bottom: 1.2em;
 }
-
 .markdown-body h2 {
-   text-align: center;
-   font-family: "宋体";
-   font-size: 1.25rem;
-   line-height: 1em;
+   font-size: 1.45em;
+   border-bottom: 1px solid #e2dccb !important;
+   padding-bottom: 0.35em;
+   letter-spacing: 0.04em;
+}
+.markdown-body h3 { font-size: 1.2em; }
+.markdown-body h4 { font-size: 1.05em; font-style: italic; }
+.markdown-body h5 { font-size: 1em; }
+.markdown-body h6 { font-size: 0.95em; color: #5c5a52; }
+
+.markdown-body a {
+   color: #8a5a00 !important;
+   text-decoration: underline;
+   text-underline-offset: 0.18em;
+   text-decoration-thickness: 0.06em;
+}
+.markdown-body a:hover { color: #5c3d00 !important; }
+
+.markdown-body strong { font-weight: 700; color: #1a1a18; }
+.markdown-body em { font-style: italic; }
+
+.markdown-body code {
+   font-family: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+   font-size: 0.85em;
+   background: #f9f7f1;
+   border-radius: 3px;
+   padding: 0.15em 0.35em;
+   color: #3d3a34;
+}
+.markdown-body pre {
+   background: #faf8f3;
+   border: 1px solid #eee9de;
+   border-radius: 4px;
+   padding: 1em 1.2em;
+   overflow: auto;
+   line-height: 1.55;
+   text-indent: 0;
+   margin: 16px 0;
+}
+.markdown-body pre code {
+   background: none;
+   padding: 0;
+   font-size: 0.85em;
+}
+.markdown-body pre code.hljs { background: transparent; }
+
+.markdown-body blockquote {
+   margin: 1.4em 0;
+   padding: 0.1em 1.2em;
+   color: #4c4a44;
+   border-left: 3px solid #c9c0ad;
+   font-style: italic;
+   text-indent: 0;
+}
+.markdown-body blockquote p { text-indent: 0; }
+
+.markdown-body ul,
+.markdown-body ol {
+   padding-left: 1.7em;
+   margin: 0.8em 0;
+}
+.markdown-body li { margin: 0.3em 0; }
+.markdown-body li p { text-indent: 0; margin: 0; }
+
+.markdown-body .katex-display {
+   margin: 0.5em 0;
+}
+
+.markdown-body table {
+   border-collapse: collapse;
+   border-spacing: 0;
+   margin: 1.6em 0;
+   width: 100% !important;
+   max-width: 100% !important;
+   display: table;
+   font-size: 0.95em;
+   text-indent: 0;
+}
+.markdown-body th,
+.markdown-body td {
+   border: none !important;
+   border-bottom: 1px solid #e2dccb !important;
+   padding: 0.45em 0.8em;
+   vertical-align: top;
+}
+.markdown-body th {
+   border-bottom: 2px solid #b9b2a0 !important;
    font-weight: 600;
+   letter-spacing: 0.03em;
+   text-align: left;
+   background: transparent;
+}
+.markdown-body tr:last-child td { border-bottom: none !important; }
+.markdown-body table tr:nth-child(2n) {
+    background-color: #fff !important;
+}
+
+.markdown-body hr {
+   height: 1px;
    border: none;
-   line-height: 1.5em;
-   letter-spacing: 1px;
-   text-indent: 1px;
-   margin: 0;
-   padding: 0;
-}
-
-.markdown-body h3 {
-   font-family: "宋体";
-   font-size: 1rem;
-   font-weight: 800;
-   font-size: 1.1em;
-   margin: 0.75em 0;
-   padding: 0;
-}
-
-selections {
-   display: flex;
-   justify-content: space-between;
-   width: 100%;
-   margin: 1em 0;
-}
-
-.markdown-body p.image-only {
-   text-align: center;
-}
-
-.markdown-body p.image-only > img {
-   max-width: 75%;
+   background: #d8d1c0;
+   margin: 2.2em auto;
+   width: 40%;
+   text-indent: 0;
 }
 
 .markdown-body img {
    max-width: 100%;
+   display: block;
+   margin: 1.4em auto;
 }
-`;
+.markdown-body p.image-only { text-align: center; }
+.markdown-body p.image-only > img { max-width: 78%; }
 
-const gaokaoStylePreview = `## 2025 年普通高等学校招生全国统一考试
-# 数学
+.markdown-body sup.footnote-ref a {
+   font-size: 0.75em;
+   text-decoration: none;
+   color: #8a5a00;
+   margin-left: 0.1em;
+}
+.markdown-body .footnotes-sep {
+   display: none;
+}
+.markdown-body section.footnotes {
+   font-size: 0.82em;
+   border-top: 1px solid #d8d1c0;
+   margin-top: 2.5em;
+   padding-top: 1em;
+   color: #55524b;
+   text-indent: 0;
+}
+.markdown-body section.footnotes .footnote-backref { display: none; }
 
-###   本试卷共 12 页，150 分。考试时长 120 分钟。考生务必将答案写在答题卡上，在试卷上作答无效。考试结束后，将本试卷和答题卡一并交回。
+.markdown-body p.katex-block { overflow: auto; text-indent: 0; }
 
-## 第一部分
+.markdown-body blockquote[alert="Note"] { --alert-color: #8a5a00; }
+.markdown-body blockquote[alert="Tip"] { --alert-color: #687a3d; }
+.markdown-body blockquote[alert="Important"] { --alert-color: #6a4f9e; }
+.markdown-body blockquote[alert="Warning"] { --alert-color: #9a6a00; }
+.markdown-body blockquote[alert="Caution"] { --alert-color: #a03a30; }
+.markdown-body blockquote[alert] {
+   border-left: 3px solid var(--alert-color);
+   color: inherit;
+   padding: 0.5em 1em;
+}
+.markdown-body blockquote[alert] > .alert-head {
+   color: var(--alert-color);
+   font-weight: 700;
+   margin-bottom: 0.5em;
+}
+.markdown-body blockquote[alert] > .alert-head > i { font-size: 1.1rem; }
 
-### 一、选择题共 10 小题，每小题 4 分，共 40 分。在每小题列出的四个选项中，选出符合题目要求的一项。
+page-break { break-before: page; }
 
-1. 设集合 $M = \\{x \\mid 2x - 1 > 5\\}$，集合 $N = \\{1, 2, 3\\}$，则 $M \\cap N = $ （ ）    
-<selections>
-  $\\text{A. } \\{1, 2, 3\\}$
-  $\\text{B. } \\{2, 3\\}$
-  $\\text{C. } \\{3\\}$
-  $\\text{D. } \\varnothing$
-</selections>  
-`;
+@media print {
+   .markdown-body { background: none; box-shadow: none; }
+}
+@page { size: A4; margin: 20mm 18mm; }`;
 
 export const presetStyles: {
-   [key: string]: {
-      css: string;
-      preview: string;
-   };
+   [key: string]: string;
 } = {
-   Github: {
-      css: githubStyleCSS,
-      preview: githubStylePreview,
-   },
-   Gaokao: {
-      css: gaokaoStyleCSS,
-      preview: gaokaoStylePreview,
-   },
+   GitHub: githubStyleCSS,
+   Serif: publicationStyleCSS,
 };
 
 export const useStyling = defineStore("styling", () => {
    const style = ref(githubStyleCSS),
       preset = computed({
          get() {
-            return Object.keys(presetStyles).find(
-               (name) => style.value == presetStyles[name]?.css,
+            return (
+               Object.keys(presetStyles).find(
+                  (name) => style.value === presetStyles[name],
+               ) ?? null
             );
          },
          set(val) {
             if (val) {
-               style.value = presetStyles[val]?.css ?? "";
-               preview.value = presetStyles[val]?.preview ?? githubStylePreview;
+               style.value = presetStyles[val] ?? "";
+               preview.value = githubStylePreview;
             }
          },
       }),

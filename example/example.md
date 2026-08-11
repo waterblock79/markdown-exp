@@ -1,13 +1,14 @@
 ## Example Markdown Document
 
-With **Markdown**, you can create complex formatting for your documents using a simple, readable syntax. For instance, we can use `**bold text**` to create **bold text**.
+With **Markdown**, you can create complex formatting for your documents using simple, readable syntax. For example, we can create **bold text** by using `**bold text**`.
 
 ![](./images/example-image.svg)
 
-Markdown **Exp** helps you transform Markdown files into print-quality documents. You can save your work as a PDF via the **Save as PDF** option in the browser's print dialog :page_facing_up:.
+Markdown **Exp** helps you render Markdown files into print‑quality documents. You can save the document as PDF via the **Save as PDF** option in your browser's print function :page_facing_up:.
 
 > [!TIP]
-> Markdown **Exp** utilizes libraries such as markdown-it, mermaid, highlight.js, @vscode/markdown-it-katex, markdown-it-footnote, markdown-it-emoji, and github-markdown-css. It also features Noto Sans SC and JetBrains Mono fonts, along with style fine-tuning to make the rendering more suitable for printing, for example:
+> Markdown **Exp** uses the markdown‑it, mermaid, highlight.js, @vscode/markdown‑it‑katex, markdown‑it‑footnote, markdown‑it‑emoji, and github‑markdown‑css
+libraries, the Noto Sans SC and Jetbrains Mono fonts, as well as style tweaks to make the document more print‑friendly, for example:
 > ```css
 > .markdown-body pre,
 > .markdown-body code {
@@ -16,9 +17,33 @@ Markdown **Exp** helps you transform Markdown files into print-quality documents
 > }
 > ```
 
-Markdown **Exp**'s default rendering remains as consistent as possible with **GitHub Flavored Markdown (GFM)** in both style and functionality[^1]. Thanks to the File System API, we also support referencing local assets[^2].
+The default rendering of Markdown **Exp** stays as consistent as possible with **GitHub‑flavored Markdown**, such as **code blocks**:
 
-If you like Markdown **Exp**, feel free to Star the project!
+```cpp
+#include <iostream>
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}
+```
 
-[^1]: Includes $\text{LaTeX}$, syntax highlighting, mermaid, etc.
-[^2]: For example, local images.
+Or $\text{LaTeX}$ formulas:
+
+$$
+\text{This is a LaTeX block!}
+$$
+
+And **tables**:
+
+| Language | Hello, World! |
+| -------- | ------------- |
+| C++      | `std::cout << "Hello, World!" << std::endl;` |
+| Python   | `print("Hello, World!")` |
+| JavaScript | `console.log("Hello, World!");` |
+| C        | `printf("Hello, World!\n");` |
+
+Thanks to the File System API, we also support referencing local resources[^1] – the image at the top of this document is a local reference.
+
+If you like Markdown **Exp**, feel free to Star this project!
+
+[^1]: For example, using `![](./images/example-image-zh.svg)` to reference a local image.

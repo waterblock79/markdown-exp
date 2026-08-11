@@ -24,14 +24,8 @@
                {{ $t("starting.loadFromGithubRepo") }}<br />
                {{ $t("starting.seamlessLocalAssetIntegration") }}<br />
                {{ $t("starting.highQualityDocumentRendering") }}<br />
-               <a
-                  class="text-primary text-decoration-none font-weight-medium cursor-pointer"
-                  @click="tryItOut"
-               >
-                  > {{ $t("starting.tryItOut") }} <
-               </a>
             </div>
-            <div class="d-flex justify-center">
+            <div class="d-flex justify-center flex-column align-center ga-2">
                <v-select
                   density="compact"
                   max-width="8em"
@@ -43,7 +37,18 @@
                   v-model="i18n.locale.value"
                   item-title="title"
                   item-value="lang"
+                  hide-details
                ></v-select>
+               <v-btn
+                  variant="outlined"
+                  size="small"
+                  color="grey-darken-2"
+                  width="8em"
+                  class="shine-btn"
+                  @click="tryItOut"
+               >
+                  {{ $t("starting.tryItOut") }}
+               </v-btn>
             </div>
          </div>
          <div
@@ -205,7 +210,7 @@
                         variant="outlined"
                         v-bind="activatorProps"
                         density="comfortable"
-                        class="opacity-70"
+                        class="opacity-70 shine-btn"
                         block
                      >
                         {{ $t("exportSettings.useCustomStyle") }}
@@ -630,6 +635,44 @@ const platform = computed(() => {
 </script>
 
 <style scoped>
+.shine-btn {
+   position: relative;
+   overflow: hidden;
+}
+.shine-btn::before {
+   content: "";
+   position: absolute;
+   top: -20%;
+   bottom: -20%;
+   left: 0;
+   width: 40%;
+   background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(90, 100, 110, 0.15) 50%,
+      transparent 100%
+   );
+   filter: blur(2px);
+   transform: translateX(-180%) skewX(-20deg);
+   will-change: transform;
+   animation: shine-sweep 5.2s cubic-bezier(0.65, 0, 0.35, 1) 0s infinite;
+   pointer-events: none;
+}
+@keyframes shine-sweep {
+   0% {
+      transform: translateX(-180%) skewX(-20deg);
+   }
+   46%,
+   100% {
+      transform: translateX(400%) skewX(-20deg);
+   }
+}
+@media (prefers-reduced-motion: reduce) {
+   .shine-btn::before {
+      animation: none;
+   }
+}
+
 .local-starting {
    display: flex;
    align-items: center;

@@ -18,9 +18,34 @@ Markdown **Exp** 可以帮助您将 Markdown 文件呈现为打印质量的文�
 > ```
 
 
-Markdown **Exp** 的默认呈现尽可能与 **Github 风格的 Markdown** 保持一致，包括样式与功能[^1]。得益于文件系统 API，我们还支持引用本地资源[^2]。
+
+Markdown **Exp** 的默认呈现尽可能与 **Github 风格的 Markdown** 保持一致，比如 **代码块**：
+
+```cpp
+#include <iostream>
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}
+```
+
+或者 $\text{LaTeX}$ 公式：
+
+$$
+\text{This is a LaTeX block!}
+$$
+
+以及 **表格**：
+
+| 语言 | Hello, World! |
+| ---- | -------------- |
+| C++ | `std::cout << "Hello, World!" << std::endl;` |
+| Python | `print("Hello, World!")` |
+| JavaScript | `console.log("Hello, World!");` |
+| C | `printf("Hello, World!\n");` |
+
+得益于文件系统 API，我们还支持引用本地资源[^1]，这个文档顶部的图片就是引用的本地资源。
 
 如果您喜欢 Markdown **Exp** 的话，欢迎 Star 这个项目！
 
-[^1]: 包括 $\text{LaTeX}$、`代码高亮`、*mermaid* 等等。
-[^2]: 例如本地图片。
+[^1]: 例如使用 `![](./images/example-image-zh.svg)` 引用的本地图片。
