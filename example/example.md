@@ -2,7 +2,7 @@
 
 With **Markdown**, you can create complex formatting for your documents using a simple, readable syntax. For instance, we can use `**bold text**` to create **bold text**.
 
-![Example Image](./images/example-image.svg)
+![](./images/example-image.svg)
 
 Markdown **Exp** helps you transform Markdown files into print-quality documents. You can save your work as a PDF via the **Save as PDF** option in the browser's print dialog :page_facing_up:.
 
@@ -20,5 +20,5 @@ Markdown **Exp**'s default rendering remains as consistent as possible with **Gi
 
 If you like Markdown **Exp**, feel free to Star the project!
 
-[^1]: Includes $\LaTeX$, syntax highlighting, mermaid, etc.
+[^1]: Includes $\text{LaTeX}$, syntax highlighting, mermaid, etc.
 [^2]: For example, local images.

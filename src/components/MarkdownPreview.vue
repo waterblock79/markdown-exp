@@ -19,8 +19,6 @@ import markdownItKatex from "@vscode/markdown-it-katex";
 import markdownItFootnote from "markdown-it-footnote";
 // @ts-ignore
 import { full as markdownItEmoji } from "markdown-it-emoji";
-// @ts-ignore
-import markdownItAttrs from "markdown-it-attrs";
 import morphdom from "morphdom";
 import mermaid from "mermaid";
 import { ref, watch, onMounted, toRaw, nextTick } from "vue";
@@ -30,10 +28,6 @@ import {
    RemoteFileHandle,
    type FileSystemFolder,
 } from "../utils/FileSystemTypes";
-import { getMetadata, markdownItMetadata } from "../utils/markdown-it/matadata";
-import { markdownItAlert } from "../utils/markdown-it/alert";
-import { useMessagesStore } from "../stores/messages";
-import { presetStyles } from "../stores/styling";
 
 if (!URL.canParse) {
    URL.canParse = (url: string | URL, base: string | URL) => {
@@ -45,8 +39,6 @@ if (!URL.canParse) {
       }
    };
 }
-
-const messages = useMessagesStore();
 
 const highlightCache = new Map<string, string>();
 const MarkdownIt = markdownIt({
@@ -66,9 +58,6 @@ const MarkdownIt = markdownIt({
 MarkdownIt.use(markdownItKatex);
 MarkdownIt.use(markdownItFootnote);
 MarkdownIt.use(markdownItEmoji);
-MarkdownIt.use(markdownItMetadata);
-MarkdownIt.use(markdownItAlert);
-MarkdownIt.use(markdownItAttrs);
 
 // Patch Math / Code Block 高亮渲染缓存逻辑
 const originalRule = {
@@ -109,103 +98,127 @@ const props = defineProps<{
 
 const previewer = ref<HTMLDivElement>();
 
-DOMPurify.addHook("uponSanitizeAttribute", (_node, data) => {
-   if (/^on/i.test(data.attrName)) data.keepAttr = false;
-   else data.keepAttr = true;
-});
-DOMPurify.addHook("uponSanitizeElement", (_node, data) => {
-   if (/script/i.test(data.tagName)) data.allowedTags[data.tagName] = false;
-   else data.allowedTags[data.tagName] = true;
-});
-
 const renderDocument = () => {
    return new Promise<void>(async (resolve) => {
-      try {
-         const metadata = getMetadata(raw.value || "");
-         const styleDeclaration = presetStyles.find(p => p.key.toLowerCase() == metadata.style?.toLowerCase());
-         let html = raw.value || "";
-         
-         previewer.value!.querySelectorAll(".scoped-style").forEach(el => el.remove());
-         if (styleDeclaration) {
-            previewer.value!.insertAdjacentHTML('afterbegin', `<style class="scoped-style"> @scope { ${styleDeclaration.css} }</style>`);
-         }
-         
-         html = MarkdownIt.render(html);
-         html = DOMPurify.sanitize(html);
-         morphdom(
-            previewer.value?.querySelector(".markdown-body")!,
-            `<div class="markdown-body">${html}</div>`,
-            {
-               childrenOnly: true,
-            },
-         );
+      const resolveYAMLMetadata = (content: string) => {
+         const yamlRegex = /^---\s*[\r\n]+([\s\S]*?)[\r\n]+---\s*/;
+         const match = content.match(yamlRegex);
 
-         await nextTick();
+         if (!match || !match[1]) return content;
 
-         previewer.value
-            ?.querySelectorAll("p:has(> img:only-child)")
-            .forEach((el) => {
-               if (!(el as HTMLParagraphElement).innerText.length) {
-                  el.classList.add("image-only");
-                  el.setAttribute("alt", el.querySelector("img")!.alt);
-               }
-            });
+         const yamlRaw = match[1];
 
-         await mermaid.run({
-            querySelector: ".language-mermaid",
-         });
+         return content.replace(yamlRegex, `<pre class="yaml-metadata">${yamlRaw}</pre>\n`);
+      };
 
-         previewer.value?.querySelectorAll("*[src]").forEach((el) => {
-            if (!el.hasAttribute("src") || !props.fileSystem) return;
-            let urlStr = el.getAttribute("src")!;
-            if (!URL.canParse(urlStr)) {
-               const trySetSrc = async () => {
-                  const file = toRaw(props.fileSystem!.getItem(urlStr));
-                  if (!(file instanceof FileSystemFile)) {
-                     console.error("Failed to resolve resource:", urlStr);
-                     return;
-                  }
-                  try {
-                     if (file.handle instanceof RemoteFileHandle) {
-                        el.setAttribute("src", file.handle.url);
-                     } else if (file.file instanceof File) {
-                        el.setAttribute(
-                           "src",
-                           URL.createObjectURL(file.file as File),
-                        );
-                     } else throw Error("");
-                  } catch (e) {
-                     if (await file.updateFile()) trySetSrc();
-                     else console.error("Failed to fetch File:", urlStr);
-                  }
-               };
-               trySetSrc();
+      let html = raw.value || "";
+      html = resolveYAMLMetadata(html);
+      html = MarkdownIt.render(html);
+      html = DOMPurify.sanitize(html);
+      morphdom(
+         previewer.value?.querySelector(".markdown-body")!,
+         `<div class="markdown-body">${html}</div>`,
+         {
+            childrenOnly: true,
+         },
+      );
+
+      await nextTick();
+
+      previewer.value
+         ?.querySelectorAll("p:has(> img:only-child)")
+         .forEach((el) => {
+            if (!(el as HTMLParagraphElement).innerText.length) {
+               el.classList.add("image-only");
             }
          });
 
-         const waitForImages = (container: HTMLElement) => {
-            const imgs = Array.from(container.querySelectorAll("img"));
+      await mermaid.run({
+         querySelector: ".language-mermaid",
+      });
 
-            const promises = imgs.map((img) => {
-               if (img.complete) return Promise.resolve();
-               return new Promise((resolve) => {
-                  img.addEventListener("load", resolve, { once: true });
-                  img.addEventListener("error", resolve, { once: true });
-               });
-            });
-
-            return Promise.all(promises);
+      for (const el of previewer.value?.querySelectorAll("blockquote") ?? []) {
+         const alertRegexMap: { [key: string]: { r: RegExp; i: string } } = {
+            Note: {
+               r: /^\s*\[!NOTE\]/gi,
+               i: "mdi-information-slab-circle-outline",
+            },
+            Tip: {
+               r: /^\s*\[!TIP\]/gi,
+               i: "mdi-lightbulb-outline",
+            },
+            Important: {
+               r: /^\s*\[!IMPORTANT\]/gi,
+               i: "mdi-comment-alert-outline",
+            },
+            Warning: {
+               r: /^\s*\[!WARNING\]/gi,
+               i: "mdi-alert-outline",
+            },
+            Caution: {
+               r: /^\s*\[!CAUTION\]/gi,
+               i: "mdi-alert-circle-outline",
+            },
          };
-
-         await waitForImages(previewer.value?.querySelector(".markdown-body")!);
-         resolve();
-      } catch (e) {
-         messages.add(
-            "Error occurred while rendering the document: " + e,
-            "error",
-         );
-         console.error(e);
+         for (const alert in alertRegexMap) {
+            if (alertRegexMap[alert]?.r.test(el.innerText)) {
+               el.innerHTML = el.innerHTML.replace(
+                  new RegExp(`\\[!${alert}\\]`, "i"),
+                  "",
+               );
+               el.insertAdjacentHTML(
+                  "afterbegin",
+                  `<div class="alert-head"><i class="${alertRegexMap[alert].i} mdi mr-1"></i>${alert}</div>`,
+               );
+               el.setAttribute("alert", alert);
+            }
+         }
       }
+
+      previewer.value?.querySelectorAll("*[src]").forEach((el) => {
+         if (!el.hasAttribute("src") || !props.fileSystem) return;
+         let urlStr = el.getAttribute("src")!;
+         if (!URL.canParse(urlStr)) {
+            const trySetSrc = async () => {
+               const file = toRaw(props.fileSystem!.getItem(urlStr));
+               if (!(file instanceof FileSystemFile)) {
+                  console.error("Failed to resolve resource:", urlStr);
+                  return;
+               }
+               try {
+                  if (file.handle instanceof RemoteFileHandle) {
+                     el.setAttribute("src", file.handle.url);
+                  } else if (file.file instanceof File) {
+                     el.setAttribute(
+                        "src",
+                        URL.createObjectURL(file.file as File),
+                     );
+                  } else throw Error("");
+               } catch (e) {
+                  if (await file.updateFile()) trySetSrc();
+                  else console.error("Failed to fetch File:", urlStr);
+               }
+            };
+            trySetSrc();
+         }
+      });
+
+      const waitForImages = (container: HTMLElement) => {
+         const imgs = Array.from(container.querySelectorAll("img"));
+
+         const promises = imgs.map((img) => {
+            if (img.complete) return Promise.resolve();
+            return new Promise((resolve) => {
+               img.addEventListener("load", resolve, { once: true });
+               img.addEventListener("error", resolve, { once: true });
+            });
+         });
+
+         return Promise.all(promises);
+      };
+
+      await waitForImages(previewer.value?.querySelector(".markdown-body")!);
+      resolve();
    });
 };
 
@@ -226,34 +239,4 @@ defineExpose({
 }
 </style>
 
-<style>
-.markdown-body blockquote.alert-note {
-   --alert-color: #0969da;
-}
-.markdown-body blockquote.alert-tip {
-   --alert-color: #1a7f37;
-}
-.markdown-body blockquote.alert-important {
-   --alert-color: #8250df;
-}
-.markdown-body blockquote.alert-warning {
-   --alert-color: #9a6700;
-}
-.markdown-body blockquote.alert-caution {
-   --alert-color: #cf222e;
-}
-.markdown-body blockquote.alert {
-   border-left: 0.25em solid var(--alert-color);
-   color: inherit;
-   padding: 0.5em 1em;
-}
-.markdown-body blockquote.alert > .alert-head {
-   color: var(--alert-color);
-   font-weight: 700;
-   margin-bottom: 0.5em;
-}
-
-.markdown-body blockquote[alert] > .alert-head > i {
-   font-size: 1.1rem;
-}
-</style>
+<style></style>

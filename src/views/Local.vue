@@ -24,7 +24,6 @@
                {{ $t("starting.loadFromGithubRepo") }}<br />
                {{ $t("starting.seamlessLocalAssetIntegration") }}<br />
                {{ $t("starting.highQualityDocumentRendering") }}<br />
-               {{ $t("starting.customStylesAndThemes") }}<br />
                <a
                   class="text-primary text-decoration-none font-weight-medium cursor-pointer"
                   @click="tryItOut"
@@ -200,7 +199,7 @@
                   density="comfortable"
                   v-model="exportSettings.title"
                ></v-text-field>
-               <v-dialog>
+               <v-dialog height="75%" max-height="90%">
                   <template v-slot:activator="{ props: activatorProps }">
                      <v-btn
                         variant="outlined"

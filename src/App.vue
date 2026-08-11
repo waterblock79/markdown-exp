@@ -13,7 +13,7 @@
    </div>
    <v-app v-show="!fullscreenPreview.isDisplay">
       <v-main class="h-100 position-relative">
-         <Main></Main>
+         <Local></Local>
          <v-snackbar-queue v-model="messages.queue"></v-snackbar-queue>
       </v-main>
    </v-app>
@@ -27,12 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import Main from "./views/Main.vue";
+import Local from "./views/Local.vue";
 import { useMessagesStore } from "./stores/messages";
 import MarkdownPreview from "./components/MarkdownPreview.vue";
 import { useFullscreenPreview } from "./stores/fullscreen-preview";
 import { onMounted, ref, watch } from "vue";
-import { optionalCSS, presetStyles, useStyling } from "./stores/styling";
+import { useStyling } from "./stores/styling";
 
 const styling = useStyling();
 const messages = useMessagesStore();
@@ -47,17 +47,9 @@ onMounted(() => {
    const styleEl = document.createElement("style");
    document.head.append(styleEl);
    watch(
-      styling,
-      (styling) => {
-         const declaration = presetStyles.find(
-            (p) => p.key == styling.styleDeclaration,
-         );
-         const optionalStyle = optionalCSS['singleImage'][styling.options.singleImage] + optionalCSS['hideMetadata'][styling.options.hideMetadata ? 'true' : 'false'];
-         if (declaration) {
-            styleEl.innerHTML = declaration.css + optionalStyle ;
-         } else {
-            styleEl.innerHTML = styling.style + optionalStyle;
-         }
+      () => styling.style,
+      (style: string) => {
+         styleEl.innerText = style;
       },
       { immediate: true },
    );
