@@ -11,9 +11,8 @@
          <div class="text-center font-weight-regular opacity-90 describe">
             <div>
                <a
-                  class="text-primary opacity-100 text-decoration-none"
-                  href="//github.com/waterblock79/markdown-exp"
-                  target="blank"
+                  class="text-primary opacity-100 text-decoration-none cursor-pointer"
+                  @click="showWelcomeDialog = true"
                >
                   Markdown <b>Exp</b>
                </a>
@@ -327,6 +326,22 @@
          </div>
       </div>
    </transition>
+   <v-dialog v-model="showWelcomeDialog" width="80%">
+      <v-card>
+         <Welcome class="pa-8"></Welcome>
+         <i class="font-monospace mx-auto text-center w-66"><b>Markdown Exp</b> {{ $t("starting.is") }}{{ $t("starting.using") }}</i>
+         <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+               variant="text"
+               color="primary"
+               @click="showWelcomeDialog = false"
+            >
+               {{ $t("repo.close") }}
+            </v-btn>
+         </v-card-actions>
+      </v-card>
+   </v-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -337,6 +352,13 @@ import { useMessagesStore } from "../stores/messages";
 import { useFullscreenPreview } from "../stores/fullscreen-preview";
 import { FileSystemFile, FileSystemFolder } from "../utils/FileSystemTypes";
 import StyleEditor from "../components/StyleEditor.vue";
+import Welcome from "../components/Welcome.vue";
+
+const showWelcomeDialog = ref(localStorage.getItem("showWelcomeDialog") !== "false");
+localStorage.setItem("showWelcomeDialog", "false");
+(window as any).showWelcomeDialog = () => {
+   showWelcomeDialog.value = true;
+};
 
 const { t } = useI18n();
 const i18n = useI18n();
@@ -635,44 +657,6 @@ const platform = computed(() => {
 </script>
 
 <style scoped>
-.shine-btn {
-   position: relative;
-   overflow: hidden;
-}
-.shine-btn::before {
-   content: "";
-   position: absolute;
-   top: -20%;
-   bottom: -20%;
-   left: 0;
-   width: 40%;
-   background: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(90, 100, 110, 0.15) 50%,
-      transparent 100%
-   );
-   filter: blur(2px);
-   transform: translateX(-180%) skewX(-20deg);
-   will-change: transform;
-   animation: shine-sweep 5.2s cubic-bezier(0.65, 0, 0.35, 1) 0s infinite;
-   pointer-events: none;
-}
-@keyframes shine-sweep {
-   0% {
-      transform: translateX(-180%) skewX(-20deg);
-   }
-   46%,
-   100% {
-      transform: translateX(400%) skewX(-20deg);
-   }
-}
-@media (prefers-reduced-motion: reduce) {
-   .shine-btn::before {
-      animation: none;
-   }
-}
-
 .local-starting {
    display: flex;
    align-items: center;

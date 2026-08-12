@@ -107,4 +107,45 @@ body::-webkit-scrollbar {
 .user-select-none {
    user-select: none;
 }
+
+.shine-btn {
+   position: relative;
+   overflow: hidden;
+}
+
+.shine-btn::before {
+   content: "";
+   position: absolute;
+   top: -20%;
+   bottom: -20%;
+   left: 0;
+   width: 40%;
+   background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(90, 100, 110, 0.15) 50%,
+      transparent 100%
+   );
+   filter: blur(2px);
+   transform: translateX(-180%) skewX(-20deg);
+   will-change: transform;
+   animation: shine-sweep 3.8s cubic-bezier(0.65, 0, 0.35, 1) 0s infinite;
+   pointer-events: none;
+   opacity: var(--surface-hover-opacity, 1);
+}
+
+@keyframes shine-sweep {
+   0% {
+      transform: translateX(-180%) skewX(-20deg);
+   }
+   80%,
+   100% {
+      transform: translateX(400%) skewX(-20deg);
+   }
+}
+@media (prefers-reduced-motion: reduce) {
+   .shine-btn::before {
+      animation: none;
+   }
+}
 </style>

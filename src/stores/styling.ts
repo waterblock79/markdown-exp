@@ -101,7 +101,7 @@ const publicationStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs
 .markdown-body {
    font-family: "Source Serif 4", "Noto Serif SC", Georgia, "Songti SC", serif;
    font-size: 17px;
-   line-height: 1.85;
+   line-height: 1.65;
    color: #20201e;
    max-width: 44em;
    margin: 0 auto;
@@ -294,7 +294,7 @@ page-break { break-before: page; }
 @media print {
    .markdown-body { background: none; box-shadow: none; }
 }
-@page { size: A4; margin: 20mm 18mm; }`;
+`;
 
 export const presetStyles: {
    [key: string]: string;

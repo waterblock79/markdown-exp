@@ -27,10 +27,10 @@ int main() {
 }
 ```
 
-Or $\text{LaTeX}$ formulas:
+Or $\LaTeX$ formulas:
 
 $$
-\text{This is a LaTeX block!}
+\text{This is a \LaTeX\ block!}
 $$
 
 And **tables**:

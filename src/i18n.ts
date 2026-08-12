@@ -24,6 +24,8 @@ export const i18n = createI18n({
             singleFileDescribe: "Choose a standalone .md file",
             fromRepo: "From Github Repository",
             fromRepoDescribe: "Open a Github repository.",
+            using: " With Markdown Exp, you can convert your Markdown files into print-quality PDF documents online.",
+            exampleDocument: "## Example Markdown Document  \nWith **Markdown**, you can create complex formatting for your documents using a simple, readable syntax. For instance, we can use `**bold text**` to create **bold text**. \n\n Furthermore, $\\LaTeX$ formulas, `code block`, tables, and more can be easily integrated into your Markdown documents!\n\n![image](./example-image.svg)"
          },
          repo: {
             title: "Open a Github repository",
@@ -57,7 +59,7 @@ export const i18n = createI18n({
             directoryNotExists: "Directory {dict} not exists.",
             failedToFetchTree: "Failed to fetch tree: {message}",
             failedToFetchRepository: "Failed to fetch repository: {message}",
-         },
+         }
       },
       zh: {
          starting: {
@@ -75,6 +77,8 @@ export const i18n = createI18n({
             singleFileDescribe: "选择单个 Markdown 文件",
             fromRepo: "从 Github 仓库",
             fromRepoDescribe: "打开 Github 仓库",
+            using: "通过 Markdown Exp，您可以在线地将您的 Markdown 文件转换为打印质量的 PDF 文档。",
+            exampleDocument: "## 示例 Markdown 文档  \n使用 **Markdown**，您可以使用简单、可读的语法为文档创建复杂的格式。例如，我们可以使用 `**加粗文本**` 来创建 **加粗文本**。\n\n 此外，$\\LaTeX$ 公式、`代码块`、表格等都可以轻松地集成到您的 Markdown 文档中！\n\n![image](./example-image.svg)"
          },
          repo: {
             title: "打开 Github 仓库",

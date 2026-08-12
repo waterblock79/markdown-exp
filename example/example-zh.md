@@ -29,10 +29,10 @@ int main() {
 }
 ```
 
-或者 $\text{LaTeX}$ 公式：
+或者 $\LaTeX$ 公式：
 
 $$
-\text{This is a LaTeX block!}
+\text{这是一个\ \LaTeX\ 块！}
 $$
 
 以及 **表格**：
