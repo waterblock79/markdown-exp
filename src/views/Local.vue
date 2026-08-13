@@ -20,7 +20,7 @@
             </div>
             <div class="text-subtitle-2 font-monospace my-4">
                {{ $t("starting.gfmSupport") }}<br />
-               {{ $t("starting.loadFromGithubRepo") }}<br />
+               {{ $t("starting.editOnlineAndLoadFromGitHub") }}<br />
                {{ $t("starting.seamlessLocalAssetIntegration") }}<br />
                {{ $t("starting.highQualityDocumentRendering") }}<br />
             </div>
@@ -95,6 +95,7 @@
                   preview = null;
                   previewFileSystemBase = null;
                   isVirtual = true;
+                  addExampleFile();
                "
             >
             </v-card>
@@ -779,6 +780,18 @@ const createFolder = () => {
    newItemMode.value = "folder";
    newItemName.value = "New Folder";
    newItemDialog.value = true;
+};
+
+/** Insert an example `document.md` unless one already exists. */
+const addExampleFile = () => {
+   if (hasDuplicate(fileSystemRoot, "document.md")) return;
+   fileSystemRoot.putItem(
+      new FileSystemFile(
+         "document.md",
+         new File(["## Markdown Document\n\nThis is a Markdown document."], "document.md", { type: "text/markdown" }),
+         fileSystemRoot,
+      ),
+   );
 };
 
 const confirmNewItem = () => {
