@@ -9,6 +9,9 @@
          v-if="!fileSystemRoot.size && !isVirtual && !exportSettings.is"
       >
          <div class="text-center font-weight-regular opacity-90 describe">
+            <span @click="openGithubRepo" class="font-monospace text-subtitle-2 d-flex justify-center align-center opacity-60 cursor-pointer">
+               <v-icon icon="mdi-github" class="mr-1" size="x-small"></v-icon>markdown-exp
+            </span>
             <div>
                <a
                   class="text-primary opacity-100 text-decoration-none cursor-pointer"
@@ -611,6 +614,10 @@ localStorage.setItem("showWelcomeDialog", "false");
 
 const { t } = useI18n();
 const i18n = useI18n();
+
+const openGithubRepo = () => {
+   window.open("https://github.com/waterblock79/markdown-exp");
+}
 
 const getFileIcon = (name: string) => {
    const icons: { [key: string]: RegExp } = {
