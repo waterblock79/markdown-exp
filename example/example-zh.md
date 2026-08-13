@@ -7,8 +7,7 @@
 Markdown **Exp** 可以帮助您将 Markdown 文件呈现为打印质量的文档，您可以通过浏览器打印功能中的 **另存为 PDF** 来将文档保存为 PDF:page_facing_up:。
 
 > [!TIP]
-> Markdown **Exp** 使用 markdown-it、mermaid、highlight.js、@vscode/markdown-it-katex、markdown-it-footnote、markdown-it-emoji 和 github-markdown-css
- 库，Noto Sans SC 和 Jetbrains Mono 字体，以及样式微调来让文档呈现更适合打印，例如：
+> Markdown **Exp** 使用 markdown-it、mermaid、highlight.js、@vscode/markdown-it-katex、markdown-it-footnote、markdown-it-emoji 和 github-markdown-css 库，Noto Sans SC 和 Jetbrains Mono 字体，以及样式微调来让文档呈现更适合打印，例如：
 > ```css
 > .markdown-body pre,
 > .markdown-body code {

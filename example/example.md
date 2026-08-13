@@ -7,8 +7,7 @@ With **Markdown**, you can create complex formatting for your documents using si
 Markdown **Exp** helps you render Markdown files into print‑quality documents. You can save the document as PDF via the **Save as PDF** option in your browser's print function :page_facing_up:.
 
 > [!TIP]
-> Markdown **Exp** uses the markdown‑it, mermaid, highlight.js, @vscode/markdown‑it‑katex, markdown‑it‑footnote, markdown‑it‑emoji, and github‑markdown‑css
-libraries, the Noto Sans SC and Jetbrains Mono fonts, as well as style tweaks to make the document more print‑friendly, for example:
+> Markdown **Exp** uses the markdown‑it, mermaid, highlight.js, @vscode/markdown‑it‑katex, markdown‑it‑footnote, markdown‑it‑emoji, and github‑markdown‑css libraries, the Noto Sans SC and Jetbrains Mono fonts, as well as style tweaks to make the document more print‑friendly, for example:
 > ```css
 > .markdown-body pre,
 > .markdown-body code {

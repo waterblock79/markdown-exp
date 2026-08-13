@@ -97,6 +97,7 @@ With **Markdown**, you can create complex formatting for your documents using a 
 
 const publicationStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css");
 @import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Noto+Serif+SC:wght@400;500;700&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github.min.css");
 
 .markdown-body {
    font-family: "Source Serif 4", "Noto Serif SC", Georgia, "Songti SC", serif;
@@ -120,8 +121,6 @@ const publicationStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-   margin-top: 1.8em;
-   margin-bottom: 0.9em;
    font-weight: 600;
    line-height: 1.3;
    text-indent: 0;
@@ -134,7 +133,6 @@ const publicationStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs
    letter-spacing: 0.06em;
    font-weight: 700;
    margin-top: 0;
-   margin-bottom: 1.2em;
 }
 .markdown-body h2 {
    font-size: 1.45em;
