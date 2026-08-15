@@ -104,9 +104,16 @@ onMounted(() => {
    margin: 1em;
 }
 
+.welcome-layout {
+   padding: 32px;      
+}
+
 @media (max-width: 768px) {
    .writing-window {
       display: none;
+   }
+   .welcome-layout {
+      padding: 8px;
    }
 }
 </style>

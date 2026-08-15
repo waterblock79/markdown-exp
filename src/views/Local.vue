@@ -12,7 +12,7 @@
             <span @click="openGithubRepo" class="font-monospace text-subtitle-2 d-flex justify-center align-center opacity-60 cursor-pointer">
                <v-icon icon="mdi-github" class="mr-1" size="x-small"></v-icon>markdown-exp
             </span>
-            <div>
+            <div class="project-title">
                <a
                   class="text-primary opacity-100 text-decoration-none cursor-pointer"
                   @click="showWelcomeDialog = true"
@@ -21,13 +21,13 @@
                </a>
                {{ $t("starting.is") }}
             </div>
-            <div class="text-subtitle-2 font-monospace my-4">
+            <div class="text-subtitle-2 font-monospace my-4 project-descriptions">
                {{ $t("starting.gfmSupport") }}<br />
                {{ $t("starting.editOnlineAndLoadFromGitHub") }}<br />
                {{ $t("starting.seamlessLocalAssetIntegration") }}<br />
                {{ $t("starting.highQualityDocumentRendering") }}<br />
             </div>
-            <div class="d-flex justify-center flex-column align-center ga-2">
+            <div class="d-flex justify-center align-center ga-2 actions">
                <v-select
                   density="compact"
                   max-width="8em"
@@ -175,7 +175,7 @@
          class="w-100 h-100 top-0 left-0 py-4 px-6"
          v-else-if="(fileSystemRoot.size || isVirtual) && !exportSettings.is"
       >
-         <div class="d-flex align-center ga-2 px-2" v-if="isVirtual" style="height: 3.2em">
+         <div class="d-flex align-center ga-2 px-2 overflow-auto" v-if="isVirtual" style="min-height: 3.2em">
             <v-btn size="small" prepend-icon="mdi-file-plus-outline" @click="createFile" variant="outlined">
                {{ $t("workspace.newFile") }}
             </v-btn>
@@ -575,10 +575,12 @@
          </v-card-actions>
       </v-card>
    </v-dialog>
-   <v-dialog v-model="showWelcomeDialog" width="80%">
+   <v-dialog v-model="showWelcomeDialog" width="80%" scrollable>
       <v-card>
-         <Welcome class="pa-8"></Welcome>
-         <i class="font-monospace mx-auto text-center w-66"><b>Markdown Exp</b> {{ $t("starting.is") }}{{ $t("starting.using") }}</i>
+         <v-card-text class="pa-0">
+            <Welcome></Welcome>
+            <i class="font-monospace mx-auto text-center w-66 d-block"><b>Markdown Exp</b> {{ $t("starting.is") }}{{ $t("starting.using") }}</i>
+         </v-card-text>
          <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
@@ -744,6 +746,9 @@ const selectFile = async () => {
          fileSystemRoot,
       );
       fileSystemRoot.putItem(file);
+      // open the file in preview
+      previewFileSystemBase.value = file.parent;
+      preview.value = file;
    }
 };
 const selectFolder = async () => {
@@ -1527,6 +1532,10 @@ const platform = computed(() => {
    max-width: 22em;
 }
 
+.local-starting .actions {
+   flex-direction: column;
+}
+
 @media (max-width: 768px) {
    .local-starting {
       flex-direction: column;
@@ -1535,6 +1544,22 @@ const platform = computed(() => {
    }
    .local-starting .describe {
       width: 75%;
+   }
+}
+
+@media (max-width: 768px) and (max-height: 900px) {
+   .local-starting .project-descriptions {
+      display: none;
+   }
+   .local-starting .project-title {
+      margin-bottom: 0.5em;
+   }
+}
+
+@media (max-width: 768px) and (max-height: 600px) {
+   .local-starting .actions {
+      flex-direction: row;
+      gap: 1em;
    }
 }
 
