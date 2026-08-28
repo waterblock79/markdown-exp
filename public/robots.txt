@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Sitemap: https://waterblock79.github.io/markdown-exp/sitemap.xml
