@@ -1381,9 +1381,10 @@ ${body}
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"><\/script>
 <script>
 mermaid.initialize({ startOnLoad: false });
-document.querySelectorAll(".language-mermaid").forEach(function (el) {
-   mermaid.run({ node: el });
-});
+mermaid.run({ nodes: document.querySelectorAll(".language-mermaid") })
+   .catch(function (err) {
+      console.error("Failed to render mermaid diagram:", err);
+   });
 <\/script>
 </body>
 </html>`;

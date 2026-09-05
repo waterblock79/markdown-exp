@@ -2,6 +2,7 @@
   "name": "markdown-qwq",
   "private": true,
   "version": "0.0.0",
+  "packageManager": "pnpm@11.25.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.11.0",
     "@codemirror/lang-markdown": "^6.5.2",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/view": "^6.43.11",
     "@fontsource/roboto": "^5.2.9",
     "@vscode/markdown-it-katex": "^1.1.2",
     "codemirror": "^6.0.2",

@@ -23,3 +23,12 @@ Markdown <b>Exp</b> is a clean, powerful, open-source converter that transforms 
 <img src="./public/screenshot-2.png" align="center"/>
 
 <img src="./public/screenshot-3.png" align="center"/>
+
+### Development
+
+```bash
+# Requires Node.js and pnpm
+pnpm install
+pnpm dev
+pnpm build
+```

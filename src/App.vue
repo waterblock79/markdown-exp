@@ -70,7 +70,9 @@ body::-webkit-scrollbar {
 }
 
 #fullscreen-preview {
-   display: none;
+   filter: blur(8px);
+   opacity: 0.5;
+   padding: 1.6em 2.4em;
 }
 
 @media print {
@@ -81,6 +83,9 @@ body::-webkit-scrollbar {
    #fullscreen-preview {
       display: block !important;
       z-index: 10000;
+      filter: none !important;
+      opacity: 1 !important;
+      padding: 0 !important;
    }
    .v-application {
       display: none !important;
