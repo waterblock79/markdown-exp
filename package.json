@@ -9,7 +9,7 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
-  "packageManager": "pnpm@8.9.0",
+  "packageManager": "pnpm@12.8.1",
   "dependencies": {
     "@codemirror/commands": "^6.11.0",
     "@codemirror/lang-markdown": "^6.5.2",
