@@ -4,17 +4,23 @@
 
 
 <p align=center>
-Markdown <b>Exp</b> is a clean, powerful, open-source converter that transforms your Markdown into <b>print-quality PDFs</b>. <br/>
-<a href="https://waterblock79.github.io/markdown-exp"> <b> > Try it out < </b> </a>
+Markdown <b>Exp</b> is a clean, powerful open-source Markdown to PDF online converter<br/>
+<a href="https://waterblock79.github.io/markdown-exp"> <b> > Try it Online < </b> </a>
 </p>
+
+---
+
+This document is available in [中文](https://github.com/waterblock79/markdown-exp/blob/main/docs/README-zh.md).
 
 ### Features
 
-- 📄 GitHub Flavored Markdown (GFM) support
-- 📁 Seamless local asset integration
-- 📝 Load files from GitHub repository
-- 🖨️ Print-quality document rendering
-- 🌐 A clean, instant, no-download experience
+- 📄 Full **GitHub Flavored Markdown** (GFM) support
+- 📝 Load files from **local** / **remote repositories**
+- 📁 Seamlessly **integrate local assets** (referenced local images, etc.)
+- 🪶 **Edit** and **preview** Markdown files online
+- 🖨️ **Print-quality** Markdown rendering
+
+<img src="./public/workflow-en.svg" align="center"/>
 
 ### Screenshots
 

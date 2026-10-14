@@ -332,7 +332,7 @@
          v-else-if="exportSettings.is"
       >
          <div
-            class="w-100 d-flex pa-2 justify-center ga-12 align-center"
+            class="w-100 d-flex pa-2 justify-center ga-16 align-center"
             :style="{ height: 'calc(100% - 3.2em)' }"
          >
             <div :style="{ width: '24em' }">
@@ -451,7 +451,7 @@
                   >
                </div>
             </div>
-            <div class="border elevation-8 h-100 export-preview">
+            <div class="border elevation-8 h-100 export-preview" ref="exportPreview">
                <file-preview
                   v-model="preview"
                   :in-virtual-workspace="false"
@@ -596,7 +596,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import JSZip from "jszip";
 import FilePreview from "../components/FilePreview.vue";
@@ -1456,6 +1456,56 @@ const platform = computed(() => {
 
    return "unknown";
 });
+
+const exportPreview = ref<HTMLDivElement | null>(null);
+
+// A4 page in CSS pixels at 96 dpi, with the margins measured from an exported
+// PDF (56/600 of the width and 37.5/850 of the height on each side).
+const A4_WIDTH_PX = (210 * 96) / 25.4;
+const A4_HEIGHT_PX = (297 * 96) / 25.4;
+const PAGE_PADDING_X = (56 / 600) * A4_WIDTH_PX;
+const PAGE_PADDING_Y = (37.5 / 850) * A4_HEIGHT_PX;
+
+const exportPreviewFitA4 = () => {
+   const frame = exportPreview.value;
+   const page = frame?.firstElementChild as HTMLElement | null;
+   if (!frame || !page) return;
+
+   const style = getComputedStyle(frame);
+   const paddingX =
+      parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+   const availableWidth = frame.clientWidth - paddingX;
+   if (availableWidth <= 0) return;
+
+   // zoom reflows the page at A4 width, then scales it back to the frame.
+   page.style.setProperty("zoom", String(availableWidth / A4_WIDTH_PX));
+
+   // The page margin lives on the white preview layer, not the frame.
+   page.querySelector<HTMLElement>(".markdown-preview")?.style.setProperty(
+      "padding",
+      `${PAGE_PADDING_Y}px ${PAGE_PADDING_X}px`,
+      "important",
+   );
+};
+
+let exportPreviewObserver: ResizeObserver | null = null;
+
+watch(
+   () => exportSettings.is,
+   async (is) => {
+      exportPreviewObserver?.disconnect();
+      exportPreviewObserver = null;
+      if (!is) return;
+      await nextTick();
+      const frame = exportPreview.value;
+      if (!frame) return;
+      exportPreviewFitA4();
+      exportPreviewObserver = new ResizeObserver(exportPreviewFitA4);
+      exportPreviewObserver.observe(frame);
+   },
+);
+
+onUnmounted(() => exportPreviewObserver?.disconnect());
 </script>
 
 <style scoped>
@@ -1474,7 +1524,7 @@ const platform = computed(() => {
 .context-popover {
    position: fixed;
    z-index: 1000;
-   min-width: 12em;
+   min-width: 16em;
    border-radius: 4px;
    overflow: hidden;
    background: rgb(var(--v-theme-surface));
@@ -1607,9 +1657,10 @@ const platform = computed(() => {
 }
 
 .export-preview {
-   max-height: 100%;
+   max-height: 85%;
    max-width: 50%;
    aspect-ratio: 1 / 1.414;
+   overflow: hidden;
 }
 
 .export-preview ::-webkit-scrollbar,

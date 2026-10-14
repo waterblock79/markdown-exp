@@ -16,6 +16,7 @@ const githubStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs/gith
 .markdown-body code {
    font-family: "JetBrains Mono", "Noto Sans SC", monospace !important;
    text-wrap: auto !important;
+   word-wrap: break-word !important;
 }
 
 .markdown-body pre:has(.language-mermaid) {
@@ -179,6 +180,7 @@ const publicationStyleCSS = `@import url("https://cdnjs.cloudflare.com/ajax/libs
    padding: 0;
    font-size: 0.85em;
 }
+.markdown-body pre, .markdown-body code { word-wrap: break-word !important;}
 .markdown-body pre code.hljs { background: transparent; }
 
 .markdown-body blockquote {
