@@ -7,6 +7,15 @@ import markdownItFootnote from "markdown-it-footnote";
 import { full as markdownItEmoji } from "markdown-it-emoji";
 import DOMPurify from "dompurify";
 
+// The package exposes a nested default export when loaded directly by Node.js.
+type MarkdownItPlugin = (md: ReturnType<typeof markdownIt>) => void;
+const markdownItKatexModule = markdownItKatex as unknown as {
+   default?: MarkdownItPlugin;
+};
+const markdownItKatexPlugin: MarkdownItPlugin =
+   markdownItKatexModule.default ??
+   (markdownItKatex as unknown as MarkdownItPlugin);
+
 if (!URL.canParse) {
    URL.canParse = (url: string | URL, base: string | URL) => {
       try {
@@ -33,7 +42,7 @@ const MarkdownIt = markdownIt({
       return "";
    },
 });
-MarkdownIt.use(markdownItKatex);
+MarkdownIt.use(markdownItKatexPlugin);
 MarkdownIt.use(markdownItFootnote);
 MarkdownIt.use(markdownItEmoji);
 

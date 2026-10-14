@@ -1374,6 +1374,7 @@ const buildHTML = (title: string, body: string, css: string) => `<!DOCTYPE html>
 <style>
 ${css}
 .markdown-body { max-width: 80%; margin: 0 auto; padding: 2em 1.5em; }
+.mr-1 { margin-right: 0.25em; }
 </style>
 </head>
 <body>
